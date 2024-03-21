@@ -1,32 +1,36 @@
-import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import { createApp, type Directive, type DirectiveBinding, type VNode } from 'vue';
+import './assets/main.css';
+
 import App from './App.vue';
 import router from './router';
 
-import { Directive, DirectiveBinding, VNode } from 'vue';
-
 export const appear: Directive = {
-  beforeMount(element: HTMLElement) {
-    element.style.visibility = 'hidden';
-  },
-  updated(element: HTMLElement, binding: DirectiveBinding<boolean>, node: VNode) {
-    if (!binding.value === !binding.oldValue || null === node.transition) {
-      return;
-    }
-
-    if (!binding.value) {
-      node.transition.leave(element, () => {
+    beforeMount(element: HTMLElement) {
         element.style.visibility = 'hidden';
-      });
-      return;
-    }
+    },
+    updated(element: HTMLElement, binding: DirectiveBinding<boolean>, node: VNode) {
+        if (!binding.value === !binding.oldValue || null === node.transition) {
+            return;
+        }
 
-    node.transition.beforeEnter(element);
-    element.style.visibility = '';
-    node.transition.enter(element);
-  }
+        if (!binding.value) {
+            node.transition.leave(element, () => {
+                element.style.visibility = 'hidden';
+            });
+            return;
+        }
+
+        node.transition.beforeEnter(element);
+        element.style.visibility = '';
+        node.transition.enter(element);
+    }
 };
 
-createApp(App)
-.use(router)
-.directive('appear', appear)
-.mount('#app');
+const app = createApp(App);
+
+app.use(createPinia());
+app.use(router);
+app.directive('appear', appear);
+
+app.mount('#app');
