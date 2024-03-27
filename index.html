@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon" href="/favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vite App</title>
+
+        <script lang="ts" type="module">
+            import { getBtcDirectWalletAddresses } from '../../.config/plugins/util/wallet-addresses';
+
+            window['btcdirect'] = window['btcdirect'] || function() {
+                (window['btcdirect'].q = window['btcdirect'].q || []).push(arguments);
+            };
+            btcdirect('init', { theme: 'light' });
+            btcdirect('my-widget-call', { message: 'Hello widget from world!' });
+        </script>
+
+        <script lang="ts" src="/src/main.ts" type="module" data-btcdirect="btcdirect"></script>
+    </head>
+    <body>
+        <div id="app"></div>
+    </body>
 </html>
