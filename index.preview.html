@@ -17,10 +17,11 @@
                 c.src = e;
                 c.async = true;
                 c.type = 'module';
-                c.dataset.btcdirect = '';
+                c.dataset.btcdirect = r;
                 t = d.getElementsByTagName(i)[0];
                 t.parentNode.insertBefore(c, t);
             })(window, document, 'script', 'btcdirect', '/fiat-to-coin/fiat-to-coin.js');
+            // 'https://cdn.btcdirect.eu/fiat-to-coin/fiat-to-coin.js'
             btcdirect('init', { theme: 'light' });
             btcdirect('my-widget-call', { message: 'Hello widget from world!' });
         </script>
